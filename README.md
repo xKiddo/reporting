@@ -1,5 +1,14 @@
 # Reporting
 
+Petit projet pour envoyer, modifier et supprimer des signalements.
+
+J'ai utilisé : 
+- Le FormBuilder pour générer, modifier et récupérer les données du formulaire.
+- La librairie Angular Material pour les components UI tels que le Datepicker ou l'Autocomplete, pour leur facilité d'implémentation dans le projet.
+- Le package in-memory-web-api pour intercepter les requêtes Http et émuler un back-end.
+
+Je n'ai pas utilisé de framework css tel que Bulma ou Bootstrap car pour la taille du projet il fallait importer énormément de choses. J'ai préféré créer certains helpers scss.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
 
 ## Development server
