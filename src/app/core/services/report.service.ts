@@ -1,11 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { Author } from '../interfaces/author';
 import { Observation } from '../interfaces/observation';
 import { Report } from '../interfaces/report';
-import { ObservationsService } from './observations.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
