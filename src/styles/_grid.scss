@@ -1,0 +1,33 @@
+// Fluid container
+.container-fluid {
+  max-width: $container-fluid-width;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// Row
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: math.div($grid-gutter-width, -2);
+  margin-left:  math.div($grid-gutter-width, -2);
+}
+
+// Remove the negative margin from default .row, then the horizontal padding
+// from all immediate children columns (to prevent runaway style inheritance).
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+// Columns
+//
+// Mixin to generate grid generation the correct number of grid classes given any value of `$grid-columns`.
+@include make-grid-columns();

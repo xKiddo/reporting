@@ -1,0 +1,12 @@
+<h1>Signalements</h1>
+<p>Merci de remplir le formulaire pour saisir un nouveau signalement</p>
+
+<app-create-report></app-create-report>
+
+<ng-container *ngIf="reports && reports.length > 0">
+  <ng-container *ngFor="let report of reports.slice().reverse(); last as isLast">
+    <app-report *ngIf="report" class="d-block mt-l" [ngClass]="{'mb-l': reports.length > 1 && !isLast}" [@fadeIn]
+      [report]="report">
+    </app-report>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,141 @@
+<form class="p-s" *ngIf="reportForm" [formGroup]="reportForm" (ngSubmit)="onSubmitReportForm()" [ngClass]="{'__disabled': formLoading}" #form="ngForm">
+
+  <div class="row" formGroupName="author">
+
+    <div class="col-md-6 pb-s" *ngIf="firstNameControl">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Prénom</mat-label>
+
+        <input type="text" matInput formControlName="firstName">
+
+        <mat-error *ngIf="firstNameControl.errors">
+          {{ firstNameControl.hasError('required') ? 'Champ obligatoire' : '50 caractères maximum' }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-6 pb-s" *ngIf="lastNameControl">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Nom</mat-label>
+
+        <input type="text" matInput formControlName="lastName">
+
+        <mat-error *ngIf="lastNameControl.errors">
+          {{ lastNameControl.hasError('required') ? 'Champ obligatoire' : '50 caractères maximum' }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+     <div class="col-md-4 pb-s" *ngIf="birthDateControl">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Date de naissance</mat-label>
+
+        <input matInput [matDatepicker]="picker" formControlName="birthDate" [min]="minDate" [max]="maxDate">
+
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+
+        <mat-error *ngIf="birthDateControl.invalid">
+          Champ obligatoire
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4 pb-s" *ngIf="sexControl">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Sexe</mat-label>
+
+        <mat-select formControlName="sex">
+          <mat-option value="homme">Homme</mat-option>
+          <mat-option value="femme">Femme</mat-option>
+          <mat-option value="non-binary">Non binaire</mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="sexControl.invalid">
+          Champ obligatoire
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4 pb-s" *ngIf="emailControl">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Email</mat-label>
+
+        <input type="email" matInput formControlName="email">
+
+        <mat-error *ngIf="emailControl.hasError('required')">
+          {{ emailControl.hasError('required') ? 'Champ obligatoire' : 'Email invalide' }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-form-field class="w-100 pb-s" appearance="fill" *ngIf="descriptionControl">
+    <mat-label>Description</mat-label>
+
+    <textarea matInput formControlName="description"></textarea>
+
+    <mat-error *ngIf="descriptionControl.invalid">
+      Champ obligatoire
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100 pb-s" appearance="fill" *ngIf="observations && observations.length > 0 && observationsArray"
+    [ngClass]="{'__error': observationsArray.invalid && form.submitted}" formArrayName="observations">
+    <mat-label>Observations*</mat-label>
+
+    <mat-chip-grid #chipGrid>
+      <ng-container *ngIf="addedObservations && addedObservations.length > 0">
+
+        <mat-chip-row *ngFor="let addedObservation of addedObservations" (removed)="removeObservation(addedObservation)">
+          {{ addedObservation.name }}
+
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      </ng-container>
+    </mat-chip-grid>
+
+    <input type="text"
+      #observationInput
+      (input)="filterObservations($event)"
+      [matChipInputFor]="chipGrid"
+      [matAutocomplete]="auto"
+      required>
+
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectObservation($event)">
+      <ng-container *ngIf="filteredObservations && filteredObservations.length > 0">
+
+        <mat-option *ngFor="let filteredObservation of filteredObservations" [value]="filteredObservation">
+          <ng-container *ngIf="filteredObservation.name">
+            {{ filteredObservation.name }}
+          </ng-container>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+
+    <mat-hint *ngIf="observationsArray.invalid && form.submitted">
+      Champ obligatoire
+    </mat-hint>
+  </mat-form-field>
+
+  <div class="d-flex justify-content-end">
+    <button type="reset" mat-stroked-button ripple color="primary" class="mr-r" (click)="cancelReport()">Annuler</button>
+
+    <button type="submit" mat-raised-button ripple color="primary" [ngClass]="{'__ghost': formLoading}">
+      {{ formEditMode ? 'Sauvgarder' : 'Envoyer' }}
+      <mat-spinner *ngIf="formLoading" [diameter]="'30'" [color]="'accent'"></mat-spinner>
+    </button>
+  </div>
+</form>
+
+<div class="container-info __success mt-r mb-l" *ngIf="formSuccess" [@opacify]>
+  <mat-icon>done</mat-icon>
+  {{ formEditMode ? 'Le signalement a bien été modfié' : 'Un nouveau signalement a bien été ajouté' }}
+</div>
+
+<div class="container-info __error mt-r mb-l" *ngIf="formError || formEmailError" [@opacify]>
+  <mat-icon>close</mat-icon>
+  {{ formError ? 'Une erreur interne est survenu, merci de réessayer.' : 'Cet email a déjà été utilisé, merci d\'en utiliser un autre. ' }}
+</div>

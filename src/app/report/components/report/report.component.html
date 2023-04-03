@@ -1,0 +1,57 @@
+<mat-card *ngIf="report" [ngClass]="{'__edit': report.edit}">
+  <mat-card-header *ngIf="report.id">
+    <h2 class="m-n">Signalement N°{{ report.id }}</h2>
+  </mat-card-header>
+
+  <mat-card-content *ngIf="report.author || report.description || report.observations">
+
+    <ul *ngIf="report.author" class="d-flex flex-wrap list-reset">
+      <li *ngIf="report.author.first_name" class="mr-l mb-s">
+        Prénom : <strong>{{ report.author.first_name }}</strong>
+      </li>
+
+      <li *ngIf="report.author.last_name" class="mr-l mb-s">
+        Nom : <strong>{{ report.author.last_name }}</strong>
+      </li>
+
+      <li *ngIf="report.author.birth_date" class="mr-l mb-s">
+        Date de naissance : <strong>{{ report.author.birth_date | date: 'dd-MM-YYYY' }}</strong>
+      </li>
+
+      <li *ngIf="report.author.sex" class="mr-l mb-s">
+        Sexe : <strong>{{ report.author.sex }}</strong>
+      </li>
+
+      <li *ngIf="report.author.email" class="mb-s">
+        Email : <strong>{{ report.author.email }}</strong>
+      </li>
+    </ul>
+
+    <div *ngIf="report.description" class="desc">
+      <p class="microcopy">Description</p>
+      <p>{{ report.description }}</p>
+    </div>
+
+    <ul *ngIf="report.observations && report.observations.length > 0" class="d-flex flex-wrap list-reset">
+      <li *ngFor="let observation of report.observations; last as isLast" [ngClass]="{'mr-s': report.observations.length > 1 && !isLast}">
+
+        <ng-container *ngIf="observation.name">
+          <mat-chip>{{ observation.name }}</mat-chip>
+        </ng-container>
+      </li>
+    </ul>
+
+    <div class="d-flex justify-content-end">
+      <button type="button"  mat-stroked-button ripple color="primary" class="mr-r" *ngIf="report.id" (click)="deleteReport(report.id)">
+        <mat-icon>delete</mat-icon>
+        Supprimer
+      </button>
+
+      <button type="button" mat-raised-button ripple color="primary" (click)="editReport(report)">
+        <mat-icon>edit</mat-icon>
+        Editer
+      </button>
+    </div>
+
+  </mat-card-content>
+</mat-card>

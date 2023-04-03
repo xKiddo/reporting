@@ -1,1 +1,142 @@
-/* You can add global styles to this file, and also import other style files */
+@charset "UTF-8";
+@use "sass:math";
+@use "sass:map";
+@use "sass:string";
+
+@import "styles/variables";
+@import "styles/breakpoints";
+@import "styles/helpers";
+@import "styles/grid-builder";
+@import "styles/grid";
+@import "styles/material";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+app-root {
+  width: 100%;
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #e0e5eb;
+}
+app-root {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  background: #fff;
+  padding: 0 map.get($spacing-breakpoints, regular);
+  box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.80);
+  & svg {
+    height: 40px;
+  }
+}
+
+main {
+  flex: 1;
+  padding: 0 map.get($spacing-breakpoints, small) map.get($spacing-breakpoints, regular);
+}
+
+h1 {
+  color: map.get($reporting-primary, 500);
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 60px;
+  color: #fff;
+  background: #333;
+  padding: 0 map.get($spacing-breakpoints, regular);
+  box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.80);
+}
+
+form.__disabled {
+  pointer-events: none;
+}
+
+.mat-mdc-form-field.__error {
+  & mat-hint,
+  & mat-label {
+    color: #f44336;
+  }
+  & .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before,
+  & .mdc-text-field--filled .mdc-line-ripple::after {
+    border-bottom-color: #f44336;
+  }
+}
+
+mat-card {
+  &.__edit {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  & h2 {
+    color: map.get($reporting-primary, 500);
+  }
+  & .desc {
+    padding: 10px;
+    background: #e0e5eb;
+    & .microcopy {
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+}
+
+.mdc-button {
+  height: 40px !important;
+  &.__ghost {
+    color: transparent !important;
+  }
+  & mat-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+}
+
+.container-info {
+  position: relative;
+  border-radius: 4px;
+  padding: map.get($spacing-breakpoints, regular) map.get($spacing-breakpoints, regular) map.get($spacing-breakpoints, regular) 56px;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-left: 4px solid;
+  & mat-icon {
+    position: absolute;
+    top: 50%;
+    left: map.get($spacing-breakpoints, regular);
+    transform: translateY(-50%);
+    border-radius: 50%;
+    color: #fff;
+  }
+  &.__success {
+    border-color: #27e678;
+    background: scale-color(#27e678, $lightness: 75%);
+    & mat-icon {
+      background: #27e678;
+    }
+  }
+  &.__error {
+    border-color: #f44336;
+    background: scale-color(#f44336, $lightness: 75%);
+    & mat-icon {
+      background: #f44336;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+// Grid System
+$grid-columns: 12 !default;
+$grid-gutter-width: 20px !default;
+$grid-breakpoints: (
+  xs: 0,
+  sm: 320px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1920px
+) !default;
+
+// Global Container
+$container-fluid-width: 1140px !default;
+$spacing-breakpoints: (
+  none: 0,
+  small: 10px,
+  regular: 15px,
+  large: 20px,
+  auto: auto
+) !default;

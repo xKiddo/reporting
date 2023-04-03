@@ -1,0 +1,44 @@
+{
+  "observations": [
+    {
+      "id": 1,
+      "name": "Marche"
+    },
+    {
+      "id": 2,
+      "name": "Redemarrage"
+    },
+    {
+      "id": 3,
+      "name": "Anomalie"
+    },
+    {
+      "id": 4,
+      "name": "Dysfonctionnement"
+    },
+    {
+      "id": 5,
+      "name": "Redémarrage"
+    },
+    {
+      "id": 6,
+      "name": "Démarrage"
+    },
+    {
+      "id": 7,
+      "name": "Hors Tension"
+    },
+    {
+      "id": 8,
+      "name": "Coupure"
+    },
+    {
+      "id": 9,
+      "name": "Ouvert"
+    },
+    {
+      "id": 10,
+      "name": "Fermé"
+    }
+  ]
+}
